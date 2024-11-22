@@ -18,6 +18,19 @@ namespace Pokemon_oppgave
             Name = pname;
             Health = hp;
             Level = lvl;
+            }
+        public static Pokemon CreatePokemon()
+        {
+            Console.WriteLine("Give your Pokemon a name");
+            var name = Console.ReadLine();
+            
+            Console.WriteLine("HP");
+            int hp = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Which lvl?");
+            int lvl = int.Parse(Console.ReadLine());
+
+            return new Pokemon(name, hp, lvl);
         }
         public void RevealPokemon()
         {

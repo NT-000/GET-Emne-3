@@ -12,7 +12,7 @@ namespace Pokemon_oppgave
             var pikachu = new Pokemon("Pikachu", 10, 2);
             var krabby = new Pokemon("Krabby", 20, 10);
             var hitmonlee = new Pokemon("Hitmonlee", 50, 30);
-            //var newPokemon = new Pokemon()
+            
 
             do
             {
@@ -21,7 +21,8 @@ namespace Pokemon_oppgave
                 Console.WriteLine("2.Water Pokemon");
                 Console.WriteLine("3.Fighting Pokemon");
                 Console.WriteLine("4.Pokemon Package");
-                Console.WriteLine("\nType '5' to quit.");
+                Console.WriteLine("5.Create a new Pokemon");
+                Console.WriteLine("\nType '6' to quit.");
 
                 var input = Console.ReadLine();
                 switch (input)
@@ -42,17 +43,22 @@ namespace Pokemon_oppgave
                         hitmonlee.RevealPokemon();
                         break;
                     case "5":
+                        var newPokemon = Pokemon.CreatePokemon();
+                        Console.WriteLine("\nYour new Pokemon just hatched...:");
+                        Thread.Sleep(2000);
+                        newPokemon.RevealPokemon();
+                        Console.WriteLine("\n");
+                        break;
+                    case "6":
                         Console.WriteLine("You chose to exit, goodbye!");
                         return;
-                    case "6":
-                        //createPokemon();
-                        break;
                     default:
-                        Console.WriteLine("1-4 or 5 to exit...");
                         Console.Clear();
+                        Console.WriteLine("1-4 or 5 to exit...");
                         break;
                 }
             } while (true);
         }
     }
 }
+
