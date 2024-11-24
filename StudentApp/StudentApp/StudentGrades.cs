@@ -8,21 +8,32 @@ namespace StudentApp
 {
     internal class StudentGrades
     {
+
         public Student Student { get; set;}
         public Subject Subject { get; set;} 
-        private int Grades { get; set; }
+        public int Grade { get; set; }
 
-        public StudentGrades(Student student, Subject subject, int grades) 
+       
+
+        public StudentGrades(Student currentStudent, Subject subject, int grade) 
         {
-            Student = student;
+            Student = currentStudent;
             Subject = subject;
-            Grades = grades;
+            Grade = grade;
         }
 
-        public void ShowGrades()
-        {
-            Console.WriteLine($"Student: {Student.Name}, Subject. {Subject.SubjectName}, Grade: {Grades}");
-        }
+ 
+        //public void ShowGrades(string name, string subject, int grade)
+        //{
+        //    if (Student == null || Subject == null)
+        //    {
+        //        Console.WriteLine("Missing student or subject info.");
+        //        return;
+        //    }
+        //    Console.WriteLine($"Student: {name}, Subject: {Subject.SubjectName}, Grade: {grade}");
+        //}
+
+
     }
 
-}
+}   
