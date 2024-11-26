@@ -1,13 +1,55 @@
-﻿using System;
-using System.Diagnostics;
-namespace StudentApp
+﻿namespace StudentApp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+
             Console.WriteLine("Hello, welcome to this student application");
-            var student1 = Run(out var student2, out var student3, out var student4, out var bachelorArts, out var bachelorMusic, out var bachelorAth, out var bachelorPsy, out var grade, out var grade2, out var grade3, out var grade4, out var students, out var subjects, out var Grade);
+            Student student1 = new("Jim", 23);
+            Student student2 = new("Anna", 29);
+            Student student3 = new("Joe", 22);
+            Student student4 = new("Christine", 29);
+            Student student5 = new("Tim", 23);
+            Student student6 = new("Kris M", 26);
+            Student student7 = new("Hannah", 25);
+            Student student8 = new("Magbula", 41);
+            Subject bachelorArts = new("Bachelor of Arts", 180);
+            Subject bachelorMusic = new("Bachelor of Music", 180);
+            Subject bachelorAth = new("Bachelor Athletics", 180);
+            Subject bachelorPsy = new("Bachelor of Psychology", 180);
+            Subject masterArts = new Subject("Master of Arts", 120);
+            Subject masterMusic = new Subject("Master of Music", 120);
+            Subject masterAthletics = new Subject("Master of Athletics", 120);
+            Subject masterPsy = new Subject("Master of Psychology", 120);
+            StudentGrades grade = new StudentGrades(student1, bachelorMusic, 4);
+            StudentGrades grade2 = new StudentGrades(student1, bachelorArts, 5);
+            StudentGrades grade3 = new StudentGrades(student2, bachelorArts, 6);
+            StudentGrades grade4 = new StudentGrades(student2, bachelorPsy, 5);
+            List<Student> students = new List<Student>();
+            students.Add(student1);
+            students.Add(student2);
+            students.Add(student3);
+            students.Add(student4);
+            students.Add(student5);
+            students.Add(student6);
+            students.Add(student7);
+            students.Add(student8);
+            List<Subject> subjects = new List<Subject>();
+            subjects.Add(bachelorArts);
+            subjects.Add(bachelorMusic);
+            subjects.Add(bachelorAth);
+            subjects.Add(bachelorPsy);
+            subjects.Add(masterArts);
+            subjects.Add(masterMusic);
+            subjects.Add(masterAthletics);
+            subjects.Add(masterPsy);
+
+            List<StudentGrades> Grade = new List<StudentGrades>();
+            Grade.Add(grade);
+            Grade.Add(grade2);
+            Grade.Add(grade3);
+            Grade.Add(grade4);
 
 
             bool isMenu = true;
@@ -19,7 +61,7 @@ namespace StudentApp
                 Console.WriteLine("\nMenu");
                 Console.ResetColor();
                 Console.WriteLine("1. Teacher menu");
-                Console.WriteLine("2. Show Data");
+                Console.WriteLine("2. Student menu");
                 Console.WriteLine("3. Exit");
                 Console.WriteLine("Choose one of the options");
                 var inputMenu = Console.ReadLine();
@@ -34,7 +76,15 @@ namespace StudentApp
                         break;
                     case "2":
                         Console.Clear();
-                        Console.WriteLine("Show data");
+                        Console.WriteLine("Log in with your ID");
+                        Student displayStudents = new Student();
+                        displayStudents.ShowAllStudents(students);
+                        var inputLogin = int.Parse(Console.ReadLine());
+                        var currentStudent = students.Find(student => student.StudentId == inputLogin);
+                        Console.WriteLine($"{currentStudent.Name}");
+
+                        StudentView menu2 = new StudentView(students, subjects, Grade);
+                        menu2.StudentMenu(currentStudent.StudentId);
                         break;
                     case "3":
                         Console.Clear();
@@ -48,47 +98,6 @@ namespace StudentApp
 
                 }
             }
-
-
-            bachelorArts.OutputInfo();
-            bachelorMusic.OutputInfo();
-            student1.showStudent();
-            student2.showStudent();
-        }
-
-        public static Student Run(out Student student2, out Student student3, out Student student4, out Subject bachelorArts,
-            out Subject bachelorMusic, out Subject bachelorAth, out Subject bachelorPsy, out StudentGrades grade,
-            out StudentGrades grade2, out StudentGrades grade3, out StudentGrades grade4, out List<Student> students, out List<Subject> subjects,
-            out List<StudentGrades> Grade)
-        {
-            Student student1 = new("Jim", 23, "Bachelor of Arts", 1);
-            student2 = new("Anna", 29, "Bachelor of Music", 2);
-            student3 = new("Joe", 22, "", 3);
-            student4 = new("Christine", 29, "Bachelor of Music", 4);
-            bachelorArts = new(1, "Bachelor of Arts", 180);
-            bachelorMusic = new(2, "Bachelor of Music", 180);
-            bachelorAth = new(3, "Bachelor Athletics", 180);
-            bachelorPsy = new(4, "Bachelor of Psychology", 180);
-            grade = new StudentGrades(student1, bachelorMusic, 4);
-            grade2 = new StudentGrades(student1, bachelorArts, 5);
-            grade3 = new StudentGrades(student2, bachelorArts, 6);
-            grade4 = new StudentGrades(student2, bachelorArts, 5);
-            students = new List<Student>();
-            students.Add(student1);
-            students.Add(student2);
-            students.Add(student3);
-            students.Add(student4);
-            subjects = new List<Subject>();
-            subjects.Add(bachelorArts);
-            subjects.Add(bachelorArts);
-            subjects.Add(bachelorAth);
-            subjects.Add(bachelorPsy);
-            Grade = new List<StudentGrades>();
-            Grade.Add(grade);
-            Grade.Add(grade2);
-            Grade.Add(grade3);
-            Grade.Add(grade4);
-            return student1;
         }
     }
 }

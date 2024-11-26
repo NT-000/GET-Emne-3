@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudentApp
+﻿namespace StudentApp
 {
     internal class StudentGrades
     {
 
-        public Student Student { get; set;}
-        public Subject Subject { get; set;} 
+        public Student Student { get; set; }
+        public Subject Subject { get; set; }
         public int Grade { get; set; }
 
-       
 
-        public StudentGrades(Student currentStudent, Subject subject, int grade) 
+
+        public StudentGrades(Student currentStudent, Subject subject, int grade)
         {
             Student = currentStudent;
             Subject = subject;
             Grade = grade;
         }
 
- 
+
         //public void ShowGrades(string name, string subject, int grade)
         //{
         //    if (Student == null || Subject == null)
@@ -36,4 +30,4 @@ namespace StudentApp
 
     }
 
-}   
+}

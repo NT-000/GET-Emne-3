@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudentApp
+﻿namespace StudentApp
 {
     internal class Teacher
     {
@@ -24,6 +17,7 @@ namespace StudentApp
             bool isTeacher = true;
             while (isTeacher)
             {
+                Console.Clear();
                 Console.WriteLine("Options:");
                 Console.WriteLine("1. Add students");
                 Console.WriteLine("2. Add courses");
@@ -36,28 +30,16 @@ namespace StudentApp
                     case "1":
                         Console.Clear();
                         Console.WriteLine("Add student");
-                        Console.WriteLine("Enter name: ");
-                        string name = Console.ReadLine();
-                        Console.WriteLine("Enter age of student: ");
-                        int age = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter Class to enlist: ");
-                        string course = Console.ReadLine();
-                        Console.WriteLine("Enter new student-id: ");
-                        int studentId = int.Parse(Console.ReadLine());
-                        Student addStudent = new Student(name, age, course, studentId);
-                        Students.Add(addStudent);
 
                         break;
                     case "2":
                         Console.Clear();
-                        Console.WriteLine("Add course");
-                        Console.WriteLine("Enter course-id: ");
-                        int courseId1 = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Create a course");
                         Console.WriteLine("Enter course name: ");
                         string courseName = Console.ReadLine();
                         Console.WriteLine("How many credits: ");
                         int creds = int.Parse(Console.ReadLine());
-                        Subject addCourse = new Subject(courseId1, courseName, creds);
+                        Subject addCourse = new Subject(courseName, creds);
                         Courses.Add(addCourse);
                         break;
                     case "3":
@@ -70,13 +52,15 @@ namespace StudentApp
                         Console.WriteLine("Grade:");
                         int grade = int.Parse(Console.ReadLine());
                         var currentStudent = Students.Find(student => student.StudentId == studentIdGrade);
-                        var classId = Courses.Find(course => course.SubjectCode == courseId);
+                        var currentClass = Courses.Find(course => course.SubjectCode == courseId);
 
-                        StudentGrades newGrade = new StudentGrades(currentStudent, classId, grade);
-                        Grades.Add(newGrade);
-
-
-                        Console.WriteLine($"Student: {currentStudent.Name}, Subject: {classId.SubjectName}, Grade: {grade}");
+                        if (currentStudent != null || currentClass != null || grade != null)
+                        {
+                            StudentGrades newGrade = new StudentGrades(currentStudent, currentClass, grade);
+                            Grades.Add(newGrade);
+                            CompleteCourse(currentStudent, currentClass);
+                        }
+                        Console.WriteLine($"Student: {currentStudent.Name}, Subject: {currentClass.SubjectName}, Grade: {grade}");
 
                         break;
                     case "4":
@@ -85,32 +69,37 @@ namespace StudentApp
                         isTeacher = false;
                         break;
                     case "5":
+                        Console.Clear();
                         Console.WriteLine("The grades:");
                         ShowAllGrades();
-
-
-                        
                         break;
-
                 }
-                 void ShowAllGrades()
+
+                void ShowAllGrades()
                 {
 
                     if (Grades.Count == 0)
                     {
-                        Console.WriteLine("No grades available to display.");
+                        Console.WriteLine("No grades to display.");
                         return;
                     }
-
                     foreach (var grade in Grades)
-
                     {
-
-                        Console.WriteLine($"Student: {grade.Student.Name} Class:{grade.Subject.SubjectName} Grade:{grade.Grade} ");
+                        Console.WriteLine($"Student: {grade.Student.Name} Class:{grade.Subject.SubjectName} Grade:{grade.Grade}\n ");
                     }
 
                 }
-    }
+
+                void CompleteCourse(Student currentStudent, Subject currentClass)
+                {
+                    currentStudent.OngoingCourses.Remove(currentClass);
+                    currentStudent.FinishedCourses.Add(currentClass);
+                    Console.WriteLine($"{currentStudent} just finished {currentClass}\n");
+                }
+
+            }
+
         }
     }
 }
+
