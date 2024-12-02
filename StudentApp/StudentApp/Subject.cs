@@ -16,12 +16,5 @@
             Credits = credits;
         }
 
-        //public void OutputInfo()
-        //{
-
-        //    Console.WriteLine($"Course:{SubjectName} Course-Id:{SubjectCode} Credits: {Credits}");
-        //}
-
-
     }
 }

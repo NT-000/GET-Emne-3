@@ -15,19 +15,6 @@
             Subject = subject;
             Grade = grade;
         }
-
-
-        //public void ShowGrades(string name, string subject, int grade)
-        //{
-        //    if (Student == null || Subject == null)
-        //    {
-        //        Console.WriteLine("Missing student or subject info.");
-        //        return;
-        //    }
-        //    Console.WriteLine($"Student: {name}, Subject: {Subject.SubjectName}, Grade: {grade}");
-        //}
-
-
     }
 
 }
