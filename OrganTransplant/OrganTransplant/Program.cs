@@ -3,21 +3,22 @@
 namespace OrganTransplant
 {
     internal class Program
-    {
-        private static List<Doctor> doctors = GetDoctorsList();
-        private static List<Persons> donors = GetDonorsList();
-        private static Persons bernt = GetBernt();
+    {   
+       public static Persons bernt = new Persons("Bernt", "Berntsen", 31, "A-", false, false, false, true);
+        private static List<Doctor> _doctors = GetDoctorsList();
+        private static List<Persons> donors;
+
+
         static void Main(string[] args)
         {
             Console.WriteLine("\r\n#     \u2584\u2588    \u2588\u2584     \u2584\u2588\u2588\u2588\u2588\u2588\u2588\u2584     \u2584\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588    \u2584\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2584  \u2584\u2588      \u2588\u2588\u2588        \u2584\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588  \u2584\u2588       \r\n#    \u2588\u2588\u2588    \u2588\u2588\u2588   \u2588\u2588\u2588    \u2588\u2588\u2588   \u2588\u2588\u2588    \u2588\u2588\u2588   \u2588\u2588\u2588    \u2588\u2588\u2588 \u2588\u2588\u2588  \u2580\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2584   \u2588\u2588\u2588    \u2588\u2588\u2588 \u2588\u2588\u2588       \r\n#    \u2588\u2588\u2588    \u2588\u2588\u2588   \u2588\u2588\u2588    \u2588\u2588\u2588   \u2588\u2588\u2588    \u2588\u2580    \u2588\u2588\u2588    \u2588\u2588\u2588 \u2588\u2588\u2588\u258c    \u2580\u2588\u2588\u2588\u2580\u2580\u2588\u2588   \u2588\u2588\u2588    \u2588\u2588\u2588 \u2588\u2588\u2588       \r\n#   \u2584\u2588\u2588\u2588\u2584\u2584\u2584\u2584\u2588\u2588\u2588\u2584\u2584 \u2588\u2588\u2588    \u2588\u2588\u2588   \u2588\u2588\u2588          \u2588\u2588\u2588    \u2588\u2588\u2588 \u2588\u2588\u2588\u258c     \u2588\u2588\u2588   \u2580   \u2588\u2588\u2588    \u2588\u2588\u2588 \u2588\u2588\u2588       \r\n#  \u2580\u2580\u2588\u2588\u2588\u2580\u2580\u2580\u2580\u2588\u2588\u2588\u2580  \u2588\u2588\u2588    \u2588\u2588\u2588 \u2580\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2580\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2580  \u2588\u2588\u2588\u258c     \u2588\u2588\u2588     \u2580\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588       \r\n#    \u2588\u2588\u2588    \u2588\u2588\u2588   \u2588\u2588\u2588    \u2588\u2588\u2588          \u2588\u2588\u2588   \u2588\u2588\u2588        \u2588\u2588\u2588      \u2588\u2588\u2588       \u2588\u2588\u2588    \u2588\u2588\u2588 \u2588\u2588\u2588       \r\n#    \u2588\u2588\u2588    \u2588\u2588\u2588   \u2588\u2588\u2588    \u2588\u2588\u2588    \u2584\u2588    \u2588\u2588\u2588   \u2588\u2588\u2588        \u2588\u2588\u2588      \u2588\u2588\u2588       \u2588\u2588\u2588    \u2588\u2588\u2588 \u2588\u2588\u2588\u258c    \u2584 \r\n#    \u2588\u2588\u2588    \u2588\u2580     \u2580\u2588\u2588\u2588\u2588\u2588\u2588\u2580   \u2584\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2580   \u2584\u2588\u2588\u2588\u2588\u2580      \u2588\u2580      \u2584\u2588\u2588\u2588\u2588\u2580     \u2588\u2588\u2588    \u2588\u2580  \u2588\u2588\u2588\u2588\u2588\u2584\u2584\u2588\u2588 \r\n#                                                                                    \u2580         \r\n");
             var random = new Random();
-            bernt = new Persons("Bernt", "Berntsen", 31, "A-", false, false, false, true);
-
             donors = new Persons().RandomDonors(10, random);
-            doctors = new Doctor().RandomDoctors(5, random);
+            _doctors = new Doctor().RandomDoctors(5, random);
 
-            var operationRoom = new OperationRoom(donors, doctors, bernt);
+            var operationRoom = new OperationRoom(donors, _doctors, bernt);
             operationRoom.MenuOperation();
+
 
         }
 
@@ -42,12 +43,12 @@ namespace OrganTransplant
             }
         }
 
-        public static void GetInfoDoctors()
+        public void GetInfoDoctors()
         {
            Doctor doc = new Doctor();
             doc.CalculateIndividualDoctorSuccess();
             WriteLine("Doctor List:");
-            foreach (var doctor in doctors)
+            foreach (var doctor in _doctors)
             {
                 WriteLine("---------------------------------------------");
                 WriteLine($"\nFirstname: {doctor.GetDoctorName()}");
@@ -63,13 +64,13 @@ namespace OrganTransplant
 
         }
 
-        public static List<Persons> GetDonorsList()
+        public List<Persons> GetDonorsList()
         {
             return donors;
         }
         public static List<Doctor> GetDoctorsList()
         {
-            return doctors;
+            return _doctors;
         }
 
         public static Persons GetBernt()

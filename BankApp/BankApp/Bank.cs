@@ -11,6 +11,7 @@ namespace BankApp
         private List<Customer> customers = new List<Customer>();
 
         private int _loggedInCustomer;
+        private Customer _currentCustomer = new Customer("Kåre", true);
 
         public Bank()
         {  BankMenu();
@@ -57,6 +58,10 @@ namespace BankApp
 
                         break;
                     case "3":
+                        _currentCustomer.ShowBills();
+                        var billId = int.Parse(Console.ReadLine());
+                        _currentCustomer.PayBill(billId);
+
                         break;
                     case "4":
                         break;

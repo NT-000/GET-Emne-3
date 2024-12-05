@@ -18,7 +18,7 @@ namespace BankApp
         {
             _savingsAccount = isSavingsAccount;
             _accountName = accountName;
-            _balance = 0;
+            _balance = 10000;
             _accountTransactions = new List<Account>();
             _accountNumber = new Guid().ToString();
         }
@@ -44,5 +44,6 @@ namespace BankApp
         {
             return _balance;
         }
+        
     }
 }

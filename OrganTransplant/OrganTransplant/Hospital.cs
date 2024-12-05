@@ -1,24 +1,20 @@
 ﻿namespace OrganTransplant
 {
     internal class Hospital
-    {  private readonly Persons bernt = Program.GetBernt(); 
-       private readonly List<Persons> _potentialDonors = Program.GetDonorsList();
+    {   
+       private List<Persons> _potentialDonors { get; set; }
        private int _operationSucces {get; set;}
-       private List<Doctor> doctors = Program.GetDoctorsList();
-       private static Doctor SelectedDoctor = SelectedDoctor.GetSelectedDoctor();
-       private static Persons SelectedPerson = Persons.GetSelectedPerson();
-
-
-
+       private List<Doctor> doctors { get; set; }
+       private SelectedUsers _selectedUsers { get; set; }
 
         public string CheckBloodtype()
         {
             
-            Console.WriteLine($"{bernt.GetFirstName()}");
+            Console.WriteLine($"{_selectedUsers.SelectedBernt.GetFirstName()}");
 
-            Console.WriteLine($"Checking blood type compatibility for:{bernt.GetLastName()}, {bernt.GetFirstName()} (Blood Type: {bernt.GetBloodType()})");
+            Console.WriteLine($"Checking blood type compatibility for:{_selectedUsers.SelectedBernt.GetLastName()}, {_selectedUsers.SelectedBernt.GetFirstName()} (Blood Type: {_selectedUsers.SelectedBernt.GetBloodType()})");
             string space = "------------------------------";
-            var bloodMatches = _potentialDonors.Where(donor => donor.GetBloodType() == bernt.GetBloodType()).ToList();
+            var bloodMatches = _potentialDonors.Where(donor => donor.GetBloodType() == _selectedUsers.SelectedBernt.GetBloodType()).ToList();
             int count = 1;
             var matches = "";
             for (int i = 0; i < bloodMatches.Count;i++)
@@ -48,7 +44,7 @@
 
         private int GetSuccessAgeRate()
         {
-
+            var bernt = _selectedUsers.SelectedBernt;
             {
                 if (bernt.GetAge() < 35) return 30;
                 if (bernt.GetAge() < 45) return 15;
@@ -63,7 +59,7 @@
         private int GetIfSmoker()
         {
             int SuccessRate = 0;
-            if (bernt.GetSmoker())
+            if (_selectedUsers.SelectedBernt.GetSmoker())
             {
                 SuccessRate -= 10;
             }
@@ -74,7 +70,7 @@
         private int GetIfOverweight()
         {
             int SuccessRate = 0;
-            if (bernt.GetOverweight())
+            if (_selectedUsers.SelectedBernt.GetOverweight())
             {
                 SuccessRate -= 10;
             }
@@ -85,7 +81,7 @@
         private int GetIfDiabetes()
         {
             int SuccessRate = 0;
-            if (bernt.GetOverweight())
+            if (_selectedUsers.SelectedBernt.GetOverweight())
             {
                 SuccessRate -= 10;
             }
@@ -95,7 +91,7 @@
         private int GetIfAthletic()
         {
             int SuccessRate = 0;
-            if (bernt.GetAthletic())
+            if (_selectedUsers.SelectedBernt.GetAthletic())
             {
                 SuccessRate += 15;
             }

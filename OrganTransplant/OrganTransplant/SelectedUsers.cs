@@ -12,6 +12,10 @@ namespace OrganTransplant
         public Persons SelectedBernt { get; private set; }
         public Doctor SelectedDoctor { get; private set; }
 
+        public SelectedUsers()
+        {
+
+        }
         public SelectedUsers(Persons bernt)
         {
             SelectedBernt = bernt;
@@ -64,15 +68,6 @@ namespace OrganTransplant
             }
         }
 
-        public bool IsValid()
-        {
-            if (SelectedDonor == null || SelectedDoctor == null || SelectedBernt == null)
-            {
-                Console.WriteLine("All selections (donor, doctor, and recipient) must be made before proceeding.");
-                return false;
-            }
-            return true;
-        }
         public Persons GetSelectedDonor()
         {
             return SelectedDonor;

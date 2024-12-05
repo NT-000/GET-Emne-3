@@ -2,9 +2,9 @@
 {   
     internal class Persons
     {
-        public static Persons SelectedPerson { get; }
-        private static Persons SelectedPersonBernt = Program.GetBernt();
-        private static List<Persons> matchedList = GetBloodMatches();
+        private SelectedUsers _selectedUsers;
+        private List<Persons> matchedList;
+
         
         private string FirstName { get; set; }
         private string LastName { get; set; }
@@ -17,10 +17,14 @@
 
         private int SuccessRatio { get; set; }
 
-        public Persons () { }
+        public Persons ()
+        {
+
+        }
         public Persons(string firstName, string lastName, int age, string bloodType, bool isSmoker, bool isFat,
             bool isDiabetes, bool isAthletic)
         {
+
             FirstName = firstName;
             LastName = lastName;
             Age = age;
@@ -68,7 +72,8 @@
 
         public int GetSuccessRatioBernt()
         {
-            return Program.GetBernt().SuccessRatio;
+            var bernt = Program.bernt;
+            return bernt.SuccessRatio;
         }
         public bool GetRandomBool(Random random)
         {
@@ -156,7 +161,8 @@
         }
         public void CalculateIndividualDonorSuccess()
         {
-            var donorList = Program.GetDonorsList();
+            Program list = new Program();
+            var donorList = list.GetDonorsList();
 
             if (donorList.Count == 0)
             {
@@ -219,7 +225,7 @@
 
         public void GetInfoSelectedPerson()
         {   
-            var selectedBernt = MenuSelection.GetSelectedBernt();
+            var selectedBernt = Program.GetBernt();
             Console.WriteLine($"Journal: {selectedBernt.GetLastName()}, {selectedBernt.GetFirstName(),-15} ");
             Console.WriteLine("------------------------------------");
             Console.WriteLine($"Age: {selectedBernt.GetAge()}");
@@ -233,18 +239,19 @@
         }
 
 
-        public static List<Persons> GetBloodMatches()
+        public List<Persons> GetBloodMatches(Persons bernt, List<Persons> donors)
         {
-            var bloodMatches = Program.GetDonorsList().Where(donor => donor.GetBloodType() == SelectedPersonBernt.GetBloodType()).ToList();
-            return bloodMatches;
+            if (bernt == null)
+                Console.WriteLine("bernt cannot be null.");
+            ;
+            if (donors == null)
+                Console.WriteLine("Donors list cannot be null.");
+            
+
+            return donors.Where(donor => donor.GetBloodType() == bernt.GetBloodType()).ToList();
         }
 
         // selectedPerson
-        public static Persons GetSelectedPerson()
-        {
-            return SelectedPerson;
-
-        }
 
         public List<Persons> GetMatchedList()
         {
