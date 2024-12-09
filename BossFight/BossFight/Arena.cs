@@ -2,102 +2,92 @@
 {
     internal class Arena
     {
+        public static int TurnCounter = 0;
         private Fighter SelectedFighter { get; set; }
         public static int Counter = 0;
         public Arena()
         {
-
             var hero = new Fighter("Hero", 100, 20, 40);
             var boss = new Fighter("Boss", 400, 10);
-            var potionClass = new Potion();
             var random = new Random();
             bool isRunning = true;
 
             while (true)
-            {
+            {   
+                IncreaseTurnCounter();
+                
+                Console.WriteLine($"\nTurn {TurnCounter}\n");
                 Console.ResetColor();
                 CheckCounter();
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"\nIt's {CheckCounterForName(hero, boss)} turn\n");
-                Console.ResetColor();
-                Console.Write($"HERO HP:{hero.HpBarHero(hero)} {hero.GetHealth()}%    ");
-                Console.ResetColor();
-                Console.Write($"Stamina:{hero.StaminaBarHero(hero)} {hero.GetStamina() * 2.5}%\n");
-                Console.ResetColor();
-                Console.WriteLine("");
-                Console.Write($"BOSS HP:{boss.HpBarBoss(boss)} {boss.GetHealth() / 4}%    ");
-                Console.ResetColor();
-                Console.Write($"Stamina:{boss.StaminaBarBoss(boss)} {boss.GetStamina() * 10}%\n");
-                Console.ResetColor();
-                Console.WriteLine("---------------------------------------------------------------------");
-                Console.ResetColor();
+                ShowStatusBars(hero, boss);
+                Console.WriteLine("HERO actions:");
                 Console.WriteLine("\n1.Attack\n");
                 Console.WriteLine("2.Rest\n");
                 Console.WriteLine("3.Show inventory/Use item\n");
-                var inputChoice = int.Parse(Console.ReadLine());
-                Console.Clear();
                 if (Counter == 0)
                 {
-                    SwitchHero(inputChoice, hero, boss, random, isRunning);
+                    Console.Clear();
+                    TurnHero(hero, boss, random);
+                    Console.ReadKey();
                 }
 
                 if (Counter == 1)
                 {
-                    SwitchBoss(inputChoice, hero, boss, random, isRunning);
+                    Console.Clear();
+                    boss.BossAttack(hero, random);
+                    
                 }
-
             }
-
-
         }
 
-        void SwitchHero(int inputChoice, Fighter hero, Fighter boss, Random random, bool isRunning)
+        private void TurnHero(Fighter hero, Fighter boss, Random random)
         {
+            bool isRunning;
+            int inputChoice = int.Parse(Console.ReadLine());
+
+            
+            Console.Clear();
             switch (inputChoice)
             {
+
                 case 1:
-                    Console.WriteLine("Attack");
-                    hero.HeroAttack(hero, boss, random);
+                    hero.HeroAttack(boss, random);
                     break;
-
                 case 2:
-                    Console.WriteLine("Rest");
-                    hero.RestFighter(hero, boss);
-
+                    hero.RestFighter(hero,boss);
                     break;
                 case 3:
-                    Console.WriteLine("Show inventory");
-                    hero.ShowInventory(hero);
+                    hero.ShowInventory();
                     break;
                 case 4:
                     break;
                 default:
-                    Console.WriteLine("Go back");
-                    isRunning = false;
+                    Console.WriteLine("Bye!");
+                    Environment.Exit(0);
                     break;
             }
         }
-        void SwitchBoss(int inputChoice, Fighter hero, Fighter boss, Random random, bool isRunning)
-        {
-            switch (inputChoice)
-            {
-                case 1:
-                    Console.WriteLine("Attack");
-                    boss.BossAttack(boss, hero, random);
-                    break;
-                case 2:
-                    Console.WriteLine("Rest");
-                    hero.RestFighter(hero, boss);
-                    break;
 
-                case 4:
-                    break;
-                default:
-                    Console.WriteLine("Go back");
-                    isRunning = false;
-                    break;
-            }
+        private void ShowStatusBars(Fighter hero, Fighter boss)
+        {
+            Console.WriteLine("---------------------------------------------------------------------");
+            Console.ResetColor();
+            Console.WriteLine($"\nIt's {CheckCounterForName(hero, boss)} turn\n");
+            Console.ResetColor();
+            Console.Write($"HERO HP:{hero.HpBarHero()} {hero.GetHealth()}%    ");
+            Console.ResetColor();
+            Console.Write($"Stamina:{hero.StaminaBarHero()} {hero.GetStamina() * 2.5}%\n");
+            Console.ResetColor();
+            Console.WriteLine("");
+            Console.Write($"BOSS HP:{boss.HpBarBoss()} {boss.GetHealth() / 4}%    ");
+            Console.ResetColor();
+            Console.Write($"Stamina:{boss.StaminaBarBoss()} {boss.GetStamina() * 10}%\n");
+            Console.ResetColor();
+            Console.WriteLine("---------------------------------------------------------------------");
+            Console.ResetColor();
         }
+
         private string CheckCounterForName(Fighter hero, Fighter boss)
         {
             Console.ResetColor();
@@ -122,6 +112,11 @@
 
             }
 
+        }
+
+        private void IncreaseTurnCounter()
+        {
+            TurnCounter++;
         }
 
 

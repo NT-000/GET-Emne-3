@@ -10,7 +10,7 @@
 
         private int Defence { get; set; }
 
-        private int level { get; set; }
+        private int Level { get; set; }
 
         private List<Potion> _potionList { get; set; }
         private List<Fighter> FighterList { get; set; } = new List<Fighter>();
@@ -19,20 +19,19 @@
 
         public Fighter(string name, int health, int strength, int stamina)
         {
-            var potion = new Potion();
             Name = name;
             Health = health;
             Strength = strength;
             Stamina = stamina;
-            Defence = 5;
-            _potionList = new List<Potion>()
-            {
-                new("Health Potion","Health"),
-                new("Health Potion","Health"),
-                new("Health Potion","Health"),
-                new("Stamina Potion","Stamina"),
+            Defence = 10;
+            _potionList =
+            [
+                new("Health Potion", "Health"),
+                new("Health Potion", "Health"),
+                new("Health Potion", "Health"),
+                new("Stamina Potion", "Stamina")
 
-            };
+            ];
         }
 
         public Fighter(string name, int health, int stamina)
@@ -41,6 +40,7 @@
             Health = health;
             Strength = 30;
             Stamina = stamina;
+            Defence = 10;
 
         }
 
@@ -77,47 +77,47 @@
             return _potionList;
         }
 
-        public void HeroAttack(Fighter hero, Fighter boss, Random random)
+        public void HeroAttack(Fighter boss, Random random)
         {
             int chance = random.Next(0, 101);
-            if (hero.Stamina < 10)
+            if (Stamina < 10)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"{hero.Name} got to rest!");
-                hero.RestFighter(hero, boss);
+                Console.WriteLine($"{Name} got to rest!");
+                RestFighter(this,boss);
                 Arena.Counter++;
                 Console.ResetColor();
             }
 
-
             int hitSuccessRate = 100 - boss.Defence;
-            if (hero.Stamina >= 10 && hitSuccessRate >= chance)
+            if (Stamina >= 10 && hitSuccessRate >= chance)
             {
-                boss.Health -= hero.Strength;
-                hero.Stamina -= 10;
-                hero.Stamina = Math.Max(hero.Stamina, 0);
+                boss.Health -= Strength;
+                Stamina -= 10;
                 boss.Health = Math.Max(boss.Health, 0);
+                Stamina = Math.Max(Stamina, 0);
                 Arena.Counter++;
-                Console.WriteLine($"{hero.Name} hit {boss.Name} and caused {boss.Strength} damage!");
+                Console.WriteLine($"{Name} hit {boss.Name} and caused {Strength} damage!");
             }
             else
             {
-                Console.WriteLine($"{hero.Name} missed {boss.Name} with their attack!");
+                Console.WriteLine($"{Name} missed {boss.Name} with their attack!");
+                Arena.Counter++;
             }
 
 
             if (boss.Health <= 0)
             {
-                BossDie(boss, hero);
+                BossDie(this,boss);
             }
 
 
         }
 
-        public void ShowInventory(Fighter hero)
+        public void ShowInventory()
         {
             int num = 1;
-            var heroList = hero._potionList;
+            var heroList = _potionList;
             foreach (var potion in heroList)
             {
                 Console.WriteLine($"{num}.{potion.GetPotionName()}");
@@ -131,22 +131,22 @@
             Console.Clear();
             if (choice.GetPotionName() == "Health Potion")
             {
-                HeroHealthHeal(hero);
+                HeroHealthHeal(this);
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine($"{choice.GetPotionName()} replenished 40 HP!");
-                hero._potionList.Remove(choice);
+                Console.WriteLine($"{choice.GetPotionName()} replenished 40 points of {Name}'s HP!");
+                _potionList.Remove(choice);
                 Console.ResetColor();
             }
             else if (choice.GetPotionName() == "Stamina Potion")
             {
-                HeroStaminaHeal(hero);
+                HeroStaminaHeal(this);
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine($"{choice.GetPotionName()} replenished 30 Stamina!");
-                hero._potionList.Remove(choice);
+                Console.WriteLine($"{choice.GetPotionName()} replenished 30 points of {Name}'s Stamina!");
+                _potionList.Remove(choice);
                 Console.ResetColor();
             }
 
-            Console.WriteLine($"{hero.Name} Health: {hero.Health} Stamina: {hero.Stamina}");
+            Console.WriteLine($"{Name} Health: {Health} Stamina: {Stamina}");
         }
 
         private void HeroStaminaHeal(Fighter hero)
@@ -166,9 +166,9 @@
         {
             if (Arena.Counter == 0)
             {
-                hero.Stamina += 40;
-                hero.Stamina = Math.Min(Stamina, 40);
-                Console.WriteLine($"{hero.Name} restored 40 stamina points!\n");
+                Stamina += 40;
+                Stamina = Math.Min(Stamina, 40);
+                Console.WriteLine($"{Name} restored 40 stamina points!\n");
                 Arena.Counter++;
             }
 
@@ -185,44 +185,45 @@
 
         private void HeroDie(Fighter hero)
         {
+            Console.Clear();
             Console.WriteLine("GAME OVER...");
             Console.WriteLine($"{hero.Name} got slain by boss...");
             Environment.Exit(0);
         }
 
-        private int RandomStrengthBoss(Fighter boss)
+        private int RandomStrengthBoss()
         {
             Random random = new Random();
             int num = random.Next(0, 31);
 
             return num;
         }
-        public void BossAttack(Fighter boss, Fighter hero, Random random)
+        public void BossAttack(Fighter hero, Random random)
         {
             int chance = random.Next(0, 101);
             int hitSuccessRate = 100 - hero.Defence;
-            boss.Strength = RandomStrengthBoss(boss);
-            if (boss.Stamina < 10)
+            Strength = RandomStrengthBoss();
+            if (Stamina < 10)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"{boss.Name} got to rest!");
-                hero.RestFighter(hero, boss);
+                Console.WriteLine($"\n{Name} got to rest!");
+                hero.RestFighter(hero, this);
                 Arena.Counter++;
                 Console.ResetColor();
             }
 
-            else if (boss.Stamina >= 10 && hitSuccessRate >= chance)
+            else if (Stamina >= 10 && hitSuccessRate >= chance)
             {
-                hero.Health -= boss.Strength;
+                hero.Health -= Strength;
                 hero.Health = Math.Max(hero.Health, 0);
-                boss.Stamina -= 10;
-                hero.Stamina = Math.Max(hero.Stamina, 0);
+                Stamina -= 10;
                 Arena.Counter++;
-                Console.WriteLine($"{boss.Name} hit {hero.Name} and caused {boss.Strength} damage, {ReturnTextDamageBoss(boss, hero, random)}");
+                Console.WriteLine($"{Name} hit {hero.Name} and caused {Strength} damage, {ReturnTextDamageBoss(hero, random)}");
             }
             else
             {
-                Console.WriteLine($"{hero.Name} missed {boss.Name} with their attack!");
+                Console.WriteLine($"{Name} missed {hero.Name} with their attack!");
+                Arena.Counter++;
             }
             if (hero.Health <= 0)
             {
@@ -231,68 +232,30 @@
 
             else
             {
-                Console.WriteLine($"{boss.Name} has {boss.Stamina} left and needs to rest");
+                Console.WriteLine($"\n{Name} has {Stamina} stamina left and needs to rest");
             }
 
         }
 
-        private void RandomMissChance(Fighter hero, Fighter boss, Random random)
-        {
-            int chance = random.Next(0, 101);
-            if (Arena.Counter == 0)
-            {
-                int hitSuccessRate = 100 - boss.Defence;
-                if (hitSuccessRate >= chance)
-                {
-                    hero.Health -= boss.Strength;
-                    boss.Stamina -= 10;
-                    Arena.Counter++;
-                    Console.WriteLine(
-                        $"{boss.Name} hit {hero.Name} and caused {boss.Strength} damage, {ReturnTextDamageBoss(boss, hero, random)}");
-                }
-                else
-                {
-                    Console.WriteLine($"{hero.Name} missed {boss.Name} with their attack!");
-                }
-            }
 
-            if (Arena.Counter == 1)
-            {
-                int successRate = 100 - hero.Defence;
-                if (successRate >= chance)
-                {
-                    Console.WriteLine($"Hit success, {boss.Strength} damage dealt!");
-                }
-                else
-                {
-                    Console.WriteLine($"{boss.Name} missed, no damage dealt.");
-                }
-            }
-        }
-
-        //private void BossRest(Fighter boss)
-        //{
-        //    boss.Stamina += 10;
-        //}
-
-        private string ReturnTextDamageBoss(Fighter boss, Fighter hero, Random random)
+        private string ReturnTextDamageBoss(Fighter hero, Random random)
         {
 
-            if (boss.Strength <= 10)
+            if (Strength <= 10)
             {
                 return RandomAnswersWeakAttack(random);
             }
 
-            if (boss.Strength >= 10 && 20 >= boss.Strength)
+            if (Strength >= 10 && 20 >= Strength)
             {
                 return RandomAnswersAverageAttack(random);
             }
-            if (boss.Strength >= 20 && 30 >= boss.Strength)
+            if (Strength >= 20 && 30 >= Strength)
             {
                 return RandomAnswersStrongAttack(random, hero);
             }
 
-            return $"{boss.Name} deals a devasting strike tyo {hero.Name}!";
+            return $"{Name} deals a devasting strike to {hero.Name}!";
         }
 
         private string RandomAnswersWeakAttack(Random random)
@@ -332,20 +295,20 @@
             }
         }
 
-        public string HpBarHero(Fighter hero)
+        public string HpBarHero()
         {
             Console.ResetColor();
             var hpBar = "";
-            for (var i = 0; i < hero.Health; i += 10)
+            for (var i = 0; i < Health; i += 10)
             {
                 hpBar += "\u258c";
             }
-            if (hero.Health <= 25)
+            if (Health <= 25)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
 
-            else if (hero.Health <= 50)
+            else if (Health <= 50)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
@@ -357,20 +320,20 @@
             return hpBar;
 
         }
-        public string StaminaBarHero(Fighter hero)
+        public string StaminaBarHero()
         {
             Console.ResetColor();
             var staminaBar = "";
-            for (var i = 0; i < hero.Stamina; i += 4)
+            for (var i = 0; i < Stamina; i += 4)
             {
                 staminaBar += "\u258c";
             }
-            if (hero.Stamina <= 10)
+            if (Stamina <= 10)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
 
-            else if (hero.Stamina <= 25)
+            else if (Stamina <= 25)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
@@ -383,20 +346,20 @@
         }
 
 
-        public string HpBarBoss(Fighter boss)
+        public string HpBarBoss()
         {
             Console.ResetColor();
             var hpBar = "";
-            for (double i = 0; i < boss.Health; i += 40)
+            for (double i = 0; i < Health; i += 40)
             {
                 hpBar += "\u258c";
             }
-            if (boss.Health <= 100)
+            if (Health <= 100)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
 
-            else if (boss.Health <= 250)
+            else if (Health <= 250)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
@@ -407,20 +370,20 @@
 
             return hpBar;
         }
-        public string StaminaBarBoss(Fighter boss)
+        public string StaminaBarBoss()
         {
             Console.ResetColor();
             var staminaBar = "";
-            for (var i = 0; i < boss.Stamina; i += 1)
+            for (var i = 0; i < Stamina; i += 1)
             {
                 staminaBar += "\u258c";
             }
-            if (boss.Stamina <= 0)
+            if (Stamina <= 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
 
-            else if (boss.Stamina <= 5)
+            else if (Stamina <= 5)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
