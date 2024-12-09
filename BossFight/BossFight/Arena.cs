@@ -15,7 +15,6 @@
             while (true)
             {   
                 IncreaseTurnCounter();
-                
                 Console.WriteLine($"\nTurn {TurnCounter}\n");
                 Console.ResetColor();
                 CheckCounter();
@@ -27,14 +26,12 @@
                 Console.WriteLine("3.Show inventory/Use item\n");
                 if (Counter == 0)
                 {
-                    Console.Clear();
                     TurnHero(hero, boss, random);
                     Console.ReadKey();
                 }
 
                 if (Counter == 1)
                 {
-                    Console.Clear();
                     boss.BossAttack(hero, random);
                     
                 }
@@ -43,10 +40,8 @@
 
         private void TurnHero(Fighter hero, Fighter boss, Random random)
         {
-            bool isRunning;
-            int inputChoice = int.Parse(Console.ReadLine());
 
-            
+            int inputChoice = int.Parse(Console.ReadLine());
             Console.Clear();
             switch (inputChoice)
             {
@@ -59,8 +54,6 @@
                     break;
                 case 3:
                     hero.ShowInventory();
-                    break;
-                case 4:
                     break;
                 default:
                     Console.WriteLine("Bye!");

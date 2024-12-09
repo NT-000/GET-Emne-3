@@ -23,7 +23,7 @@
             Health = health;
             Strength = strength;
             Stamina = stamina;
-            Defence = 10;
+            Defence = 30;
             _potionList =
             [
                 new("Health Potion", "Health"),
@@ -40,7 +40,7 @@
             Health = health;
             Strength = 30;
             Stamina = stamina;
-            Defence = 10;
+            Defence = 5;
 
         }
 
