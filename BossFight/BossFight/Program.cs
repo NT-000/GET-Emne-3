@@ -1,0 +1,3 @@
+﻿using BossFight;
+
+new Arena();

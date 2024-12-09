@@ -33,9 +33,9 @@ namespace OrganTransplant
              
 
             while (isRunning)
-            {
-
-                Console.Clear(); Console.WriteLine("1.Select Donor");
+            { 
+                Console.Clear(); 
+                Console.WriteLine("1.Select Donor");
             Console.WriteLine("2.Select Doctor");
             Console.WriteLine("3.Operate");
             Console.WriteLine("4.Journal of Bernt");

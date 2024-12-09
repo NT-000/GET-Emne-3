@@ -151,7 +151,9 @@
                     if (currentUser != null && !currentUser.GetUserFriends().Contains(potentialFriend))
                     {
                         currentUser.GetUserFriends().Add(potentialFriend);
+                        _people.Remove(currentUser);
                         potentialFriend.GetUserFriends().Add(currentUser);
+                        _people.Remove(potentialFriend);
                         Thread.Sleep(700);
                         Console.WriteLine($"\n{potentialFriend.GetName()} was just added to {selectedUser.GetSelectedUser().GetName()}'s friend list!\n");
                     }

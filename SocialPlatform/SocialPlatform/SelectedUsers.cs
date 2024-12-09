@@ -37,7 +37,7 @@
                 Console.WriteLine($"{counter}.Name: {friend.GetName()}");
                 counter++;
             }
-            Console.Clear();
+
             Console.WriteLine("Which friend-profile will you visit?");
             int index = int.Parse(Console.ReadLine());
             var friendInfo = currentUserFriendList[index-1];
