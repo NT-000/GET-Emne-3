@@ -6,26 +6,24 @@ using System.Threading.Tasks;
 
 namespace PokemonTrainer
 {
-    internal class PokeBall
-    {   
-        private int Price {get; set;}
-        private int Strength {get; set;}
-        public PokeBall(int price, int strength){ 
+    public class PokeBall
+    {
+        private int Price { get; set; }
+        private int Strength { get; set; }
+
+        private string Name { get; set; }
+
+
+        public PokeBall()
+        {
+
+        }
+        public PokeBall(string name, int price, int strength)
+        {
+            Name = name;
             Price = price;
             Strength = strength;
         }
 
-        public PokeBall _PokeBall()
-        {
-            return new PokeBall(100, 5);
-        }
-        public PokeBall GreatBall()
-        {
-            return new PokeBall(200, 10);
-        }
-        public PokeBall UltraBall()
-        {
-            return new PokeBall(400, 20);
-        }
     }
 }

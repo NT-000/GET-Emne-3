@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonTrainer
 {
-    internal class PokemonShop
-    {  
-        private List<IPokemonItems> _shopInventories;
-
+    internal class StartMenu
+    {
     }
 }
