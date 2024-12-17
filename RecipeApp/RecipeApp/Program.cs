@@ -1,0 +1,6 @@
+﻿
+
+using RecipeApp;
+
+new Menu();
+

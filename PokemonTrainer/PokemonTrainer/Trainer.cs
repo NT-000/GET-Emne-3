@@ -16,6 +16,8 @@ namespace PokemonTrainer
         public string Description {get;private set;}
         List<Pokemon> _trainerPokemon { get; set; }
         private List<IPokemonItems> _items {get; set; }
+        
+        private List<PokeBall> PokeBalls { get; set; }
 
         public string Environment { get; set; }
 
@@ -29,6 +31,7 @@ namespace PokemonTrainer
             Description = description;
             _trainerPokemon = new List<Pokemon>();
             _items = new List<IPokemonItems>();
+            PokeBalls = new List<PokeBall>();
             SelectedPokemon = null;
             Environment = "none";
         }
