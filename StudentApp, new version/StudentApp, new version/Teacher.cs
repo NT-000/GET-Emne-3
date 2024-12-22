@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudentApp__new_version
+﻿namespace StudentApp__new_version
 {
-    internal class Teacher
+    internal class Teacher : IUser
     {
-        public static int IdTeacherCounter = 1;
-        public int TeacherId { get; private set; }
+        public int Id { get; private set; }
         public string Name { get; private set; }
         public string Type { get; private set; }
-
         public string Password { get; private set; }
 
-        public List<Teacher> TeacherList { get; private set;} 
-
-        public Teacher(string name, string password)
+        public Teacher(int id, string name, string password)
         {
-            TeacherId = IdTeacherCounter++;
+            Id = id;
             Name = name;
             Password = password;
             Type = "Teacher";
@@ -27,20 +17,7 @@ namespace StudentApp__new_version
 
         public Teacher()
         {
-            TeacherList = new List<Teacher>();
         }
 
-        public void InitializingTeacher()
-        {
-            TeacherList =
-            [
-                new Teacher("Arne", "123"),
-            ];
-        }
-
-        public List<Teacher> GetTeacherList()
-        {
-            return TeacherList;
-        }
     }
 }

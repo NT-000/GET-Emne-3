@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudentApp__new_version
+﻿namespace StudentApp__new_version
 {
-    public class SchoolSubject
+    internal class SchoolSubject
     {
-        public int SchoolSubjectId { get;private set; }
-        public string SubjectName { get;private set; }
-        public string SubjectDescription { get;private set; }
-        public int Credits { get;private set; }
+        public int SchoolSubjectId { get; private set; }
+        public string SubjectName { get; private set; }
+        public string SubjectDescription { get; private set; }
+        public int Credits { get; private set; }
 
-        public List<SchoolSubject> EnrolledStudentsList { get; private set; } = new List<SchoolSubject>();
+        public List<SchoolSubject> EnrolledStudentsList { get; private set; }
 
-        public List<SchoolSubject> AvailableSchoolSubjects { get; set; }
 
         public SchoolSubject(int schoolSubjectId, string subjectName, string subjectDescription, int credits)
         {
@@ -27,7 +20,7 @@ namespace StudentApp__new_version
         }
 
 
-        public List<SchoolSubject> GetSchoolSubjectList ()
+        public List<SchoolSubject> GetSchoolSubjectList()
         {
             return EnrolledStudentsList;
         }
@@ -35,15 +28,14 @@ namespace StudentApp__new_version
 
         public SchoolSubject()
         {
-            AvailableSchoolSubjects = new List<SchoolSubject> {
-                new Gym(), new Math(), new Biology()};
+
         }
     }
 
     internal class Gym : SchoolSubject
     {
         public List<SchoolSubject> GymStudentsList { get; private set; } = new List<SchoolSubject>();
-        public Gym() : base(1,"Gym", "Physical education", 45)
+        public Gym() : base(1, "Gym", "Physical education", 45)
         {
             GymStudentsList = new List<SchoolSubject>();
         }

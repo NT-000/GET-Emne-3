@@ -1,50 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudentApp__new_version
+﻿namespace StudentApp__new_version
 {
     internal class Menu
     {
+
         public Menu()
         {
-            
+
         }
 
-       public void StartMenu(SchoolSubject subject, Grade grade, Student student, SelectedUser selectedUser)
+
+        public void StartMenu(SchoolSubject subject, Grade grade, Student student, SelectedUser selectedUser, GradeManager gradeManager, StudentManager studentManager)
         {
             bool isRunning = true;
-
+            var subjectManager = new SubjectManager();
             while (true)
             {
                 Console.WriteLine("Welcome");
-                Console.WriteLine("1.See all students");
-                Console.WriteLine($"2.See {selectedUser.GetLoggedIn().Name}'s grades");
-                Console.WriteLine("3.Show all grades");
-                Console.WriteLine("4.Add grade");
-                Console.WriteLine("5.Enroll to class");
-                switch (Console.ReadKey(intercept: true).KeyChar)
+                Console.WriteLine($"1.See {selectedUser.GetLoggedIn().Name}'s grades");
+                Console.WriteLine("2.Enroll to class");
+                Console.WriteLine("3.Logout");
+                switch (Console.ReadKey(true).KeyChar)
                 {
                     case '1':
-                        student.PrintStudents();
+                        Console.Clear();
+                        gradeManager.ShowLoggedInUserGrades(selectedUser);
                         break;
                     case '2':
-                        grade.ShowLoggedInUserGrades(selectedUser);
-
+                        Console.Clear();
+                        studentManager.EnlistToClass(subjectManager.GetSchoolSubjects(), selectedUser);
                         break;
                     case '3':
-                        grade.ShowGrades();
-                        break;
-                    case '4':
-                        grade.AddGrade(student.GetStudentList());
-                        break;
-                    case '5':
-                        student.EnlistToClass(student.GetStudentList(), subject.AvailableSchoolSubjects);
-                        break;
-                    case '6':
-                        LogOutUser(selectedUser);
+                        Console.Clear();
+                        LogOutUser(subject, grade, student, selectedUser, gradeManager, studentManager);
                         break;
                     default:
                         isRunning = false;
@@ -54,7 +41,49 @@ namespace StudentApp__new_version
             }
         }
 
-        public void LogInView(SchoolSubject subject, Grade grade, Student student, SelectedUser selectedUser, Teacher teacher)
+        public void StartMenuTeacher(SchoolSubject subject, Grade grade, Student student, SelectedUser selectedUser, GradeManager gradeManager, StudentManager studentManager)
+        {
+            bool isRunning = true;
+            var subjectManager = new SubjectManager();
+            var teacherManager = new TeacherManager();
+            while (true)
+            {
+                Console.WriteLine($"Welcome,{selectedUser.GetLoggedIn().Name} ");
+                Console.WriteLine("1.See all students");
+                Console.WriteLine("2.Show all grades");
+                Console.WriteLine("3.Grade students");
+                Console.WriteLine("4.Enroll student to class");
+                Console.WriteLine("5.Log out");
+                switch (Console.ReadKey(true).KeyChar)
+                {
+                    case '1':
+                        Console.Clear();
+                        studentManager.PrintUsers(gradeManager);
+                        break;
+                    case '2':
+                        Console.Clear();
+                        gradeManager.ShowGrades();
+                        break;
+                    case '3':
+                        Console.Clear();
+                        gradeManager.AddGrade(studentManager, student);
+                        break;
+                    case '4':
+                        Console.Clear();
+                        teacherManager.EnlistToClass(subjectManager.GetSchoolSubjects(), student, studentManager.GetUsers());
+                        break;
+                    case '5':
+                        Console.Clear();
+                        LogOutUser(subject, grade, student, selectedUser, gradeManager, studentManager);
+                        break;
+                    default:
+                        isRunning = false;
+                        break;
+
+                }
+            }
+        }
+        public void LogInView(SchoolSubject subject, Grade grade, Student student, SelectedUser selectedUser, GradeManager gradeManager, StudentManager studentManager)
         {
             bool isRunning = true;
 
@@ -66,10 +95,12 @@ namespace StudentApp__new_version
                 switch (Console.ReadKey(intercept: true).KeyChar)
                 {
                     case '1':
-                        LoginUser(subject, grade, student, selectedUser, teacher);
+                        Console.Clear();
+                        LoginUser(subject, grade, student, selectedUser, gradeManager, studentManager);
                         break;
                     case '2':
-                        RegisterUser(student);
+                        Console.Clear();
+                        RegisterUser(studentManager);
                         break;
                     default:
                         Environment.Exit(0);
@@ -79,18 +110,36 @@ namespace StudentApp__new_version
             }
         }
 
-        public void LoginUser(SchoolSubject subject, Grade grade, Student student, SelectedUser selectedUser, Teacher teacher)
+        public void LoginUser(SchoolSubject subject, Grade grade, Student student, SelectedUser selectedUser, GradeManager gradeManager, StudentManager studentManager)
         {
             Console.WriteLine("Enter StudentId");
             int inputId = Convert.ToInt32(Console.ReadLine());
+            if (inputId == null)
+            {
+                Console.WriteLine("Enter valid password");
+            }
             Console.WriteLine("Enter your password");
             string inputPass = Console.ReadLine();
-            var foundStudent = student.StudentList.Find(user => user.StudentId == inputId && inputPass == user.Password);
-            if (foundStudent != null)
+            if (inputPass == null)
             {
-                Console.WriteLine($"Login is successful, welcome {foundStudent.Name}!");
-                selectedUser.SetLoggedInStudent(foundStudent);
-                StartMenu(subject, grade, student, selectedUser);
+                Console.WriteLine("Enter valid password");
+                ;
+            }
+
+            var foundUser = studentManager.GetUsers().Find(user => user.Id == inputId && inputPass == user.Password);
+            if (foundUser != null)
+            {
+                Console.WriteLine($"Login is successful, welcome {foundUser.Name}!");
+                selectedUser.SetLoggedInStudent(foundUser);
+
+                if (foundUser.Type == "Student")
+                {
+                    StartMenu(subject, grade, student, selectedUser, gradeManager, studentManager);
+                }
+                else if (foundUser.Type == "Teacher")
+                {
+                    StartMenuTeacher(subject, grade, student, selectedUser, gradeManager, studentManager);
+                }
             }
             else
             {
@@ -98,7 +147,7 @@ namespace StudentApp__new_version
             }
         }
 
-        public void RegisterUser(Student student)
+        public void RegisterUser(StudentManager studentManager)
         {
             Console.WriteLine("Enter Name");
             string name = Console.ReadLine();
@@ -106,17 +155,19 @@ namespace StudentApp__new_version
             int age = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter new password");
             string pass = Console.ReadLine();
+            int id = studentManager.GetUsers().Count + 1;
 
-            student.StudentList.Add(new Student(name,age,pass));
+            studentManager.GetUsers().Add(new Student(id, name, age, pass));
             Console.WriteLine($"{name} was just added");
 
         }
 
-        public void LogOutUser(SelectedUser selectedUser)
+        public void LogOutUser(SchoolSubject subject, Grade grade, Student student, SelectedUser selectedUser, GradeManager gradeManager, StudentManager studentManager)
         {
             selectedUser.SetLoggedInStudent(null);
             Console.WriteLine("User has been logged out successfully.");
-           
+            LogInView(subject, grade, student, selectedUser, gradeManager, studentManager);
+
         }
     }
 }
