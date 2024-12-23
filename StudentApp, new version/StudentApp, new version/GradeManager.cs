@@ -5,6 +5,7 @@ internal class GradeManager
     public List<Grade> Grades { get; private set; }
     public List<IUser> _Students { get; private set; }
     public List<SchoolSubject> AvailableSchoolSubjects { get; private set; }
+    private string line = new ('_', 60);
 
     public GradeManager()
     {
@@ -51,11 +52,41 @@ internal class GradeManager
 
     public void ShowGrades()
     {
-        Console.WriteLine("Here's all grades");
+        Console.WriteLine("All grades from students");
+        Console.WriteLine($"{line}\n");
         foreach (var grade in Grades)
         {
             Console.WriteLine($"Name:{grade.Student.Name} Class:{grade.Subject.SubjectName} Grade:{grade.StudentGrade}");
         }
+
+        Console.WriteLine($"\n{line}\n");
+
+        Console.WriteLine("\nClass info:");
+        Console.WriteLine($"\nAverage grade all students:{CalculateAverageStudentsScore()}");
+        Console.WriteLine($"Average credits all students:{CalculateAverageStudentsCredits()}");
+        Console.WriteLine($"\n{line}\n");
+    }
+
+    public double CalculateAverageStudentsScore()
+    {
+        double sum = 0;
+        foreach (var g in Grades)
+        {
+            sum += g.StudentGrade;
+        }
+
+        return sum / Grades.Count;
+    }
+
+    public float CalculateAverageStudentsCredits()
+    {
+        float sum = 0;
+        foreach (var g in Grades)
+        {
+            sum += g.Subject.Credits/Grades.Count;
+        }
+
+        return sum;
     }
 
     public List<Grade> GetGrades()
@@ -83,26 +114,35 @@ internal class GradeManager
         }
         var index = Convert.ToInt32(Console.ReadLine());
         var selectedStudent = _studentList[index - 1];
-        Console.WriteLine($"You chose {selectedStudent.Name}");
+        Console.Clear();
         if (selectedStudent is Student checkStudent)
         {
+            Console.WriteLine($"{selectedStudent.Name} is in classes:");
+            Console.WriteLine($"{line}");
             foreach (var s in checkStudent.OngoingSubjects)
             {
-                Console.WriteLine($"{s.SchoolSubjectId}.{s.SubjectName}\nInfo:{s.SubjectDescription}\nCredits: {s.Credits}");
+                Console.WriteLine($"Subject {s.SchoolSubjectId}");
+                Console.WriteLine($"{line}");
+                Console.WriteLine($"Class:{s.SubjectName}\nInfo:{s.SubjectDescription}\nCredits: {s.Credits}");
             }
 
-
+            Console.WriteLine($"\n{line}\n");
             Console.WriteLine("Select subject to grade");
             int index2 = Convert.ToInt32(Console.ReadLine());
             var subject = checkStudent.OngoingSubjects[index2 - 1];
+            Console.Clear();
             Console.WriteLine($"Add grade for {student.Name} in {subject.SubjectName}");
             int grade = Convert.ToInt32(Console.ReadLine());
 
-            Grades.Add(new Grade(grade, checkStudent, subject));
-            checkStudent.OngoingSubjects.Remove(subject);
-            checkStudent.FinishedSchoolSubjects.Add(subject);
-            Console.WriteLine($"{grade} added for {student.Name} in class {subject.SubjectName}!");
+            AddGradeToClass(student, grade, checkStudent, subject);
         }
     }
 
+    private void AddGradeToClass(Student student, int grade, Student checkStudent, SchoolSubject subject)
+    {
+        Grades.Add(new Grade(grade, checkStudent, subject));
+        checkStudent.OngoingSubjects.Remove(subject);
+        checkStudent.FinishedSchoolSubjects.Add(subject);
+        Console.WriteLine($"\n{grade} added for {student.Name} in class {subject.SubjectName}!\n");
+    }
 }

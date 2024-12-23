@@ -15,7 +15,6 @@
             var subjectManager = new SubjectManager();
             while (true)
             {
-                Console.WriteLine("Welcome");
                 Console.WriteLine($"1.See {selectedUser.GetLoggedIn().Name}'s grades");
                 Console.WriteLine("2.Enroll to class");
                 Console.WriteLine("3.Logout");
@@ -48,12 +47,11 @@
             var teacherManager = new TeacherManager();
             while (true)
             {
-                Console.WriteLine($"Welcome,{selectedUser.GetLoggedIn().Name} ");
                 Console.WriteLine("1.See all students");
                 Console.WriteLine("2.Show all grades");
                 Console.WriteLine("3.Grade students");
                 Console.WriteLine("4.Enroll student to class");
-                Console.WriteLine("5.Log out");
+                Console.WriteLine("5.Log out\n");
                 switch (Console.ReadKey(true).KeyChar)
                 {
                     case '1':
@@ -112,7 +110,7 @@
 
         public void LoginUser(SchoolSubject subject, Grade grade, Student student, SelectedUser selectedUser, GradeManager gradeManager, StudentManager studentManager)
         {
-            Console.WriteLine("Enter StudentId");
+            Console.WriteLine("Enter your id");
             int inputId = Convert.ToInt32(Console.ReadLine());
             if (inputId == null)
             {
@@ -129,7 +127,8 @@
             var foundUser = studentManager.GetUsers().Find(user => user.Id == inputId && inputPass == user.Password);
             if (foundUser != null)
             {
-                Console.WriteLine($"Login is successful, welcome {foundUser.Name}!");
+                Console.Clear();
+                Console.WriteLine($"Login is successful, welcome {foundUser.Name}!\n");
                 selectedUser.SetLoggedInStudent(foundUser);
 
                 if (foundUser.Type == "Student")

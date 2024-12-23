@@ -3,7 +3,7 @@
     internal class StudentManager
     {
         public List<IUser> users { get; private set; }
-
+        private string line = new ('_', 60);
 
         public StudentManager()
         {
@@ -38,8 +38,6 @@
                 {
                     Console.WriteLine($"{s.SchoolSubjectId}.{s.SubjectName}");
                 }
-
-
                 int inputId2 = Convert.ToInt32(Console.ReadLine());
                 if (inputId2 == null)
                 {
@@ -64,23 +62,34 @@
         public void PrintUsers(GradeManager gradeManager)
         {
             Console.WriteLine("Users:");
+            Console.WriteLine($"{line}");
             foreach (var u in users)
             {
                 Console.WriteLine($"{u.Id}.{u.Name}");
             }
 
-            Console.WriteLine("Select a student to see grades");
+            Console.WriteLine($"{line}");
+            Console.WriteLine("\nSelect a student to see grades");
             var input = Convert.ToInt32(Console.ReadLine());
             var student = (Student)users.Find(s => s.Id == input);
 
+            Console.Clear();
+            Console.WriteLine($"Info student: {student.Name}");
+            Console.WriteLine("\nAll passed classes");
+            Console.WriteLine($"{line}");
             var studentGrades = gradeManager.Grades.Where(g => g.Student.Id == student.Id).ToList();
             foreach (var g in studentGrades)
             {
                 Console.WriteLine($"{g.Subject.SubjectName} - Grade:{g.StudentGrade}");
             }
 
+            Console.WriteLine($"{line}");
+            Console.WriteLine("\nSummary\n");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ResetColor();
             Console.WriteLine($"Average grade: {CalculateGradeAverage(student, studentGrades)}");
-
+            Console.WriteLine($"Total Credits: {CalculateTotalCredits(student)}");
+            Console.WriteLine($"{line}\n");
     }
         public double CalculateGradeAverage(Student student, List<Grade> studentGrades)
         {
@@ -90,7 +99,18 @@
                 sum += g.StudentGrade;
             }
 
-            return (double)sum / studentGrades.Count;
+            return sum / studentGrades.Count;
+        }
+
+        public float CalculateTotalCredits(Student student)
+        {
+            float sum = 0;
+            foreach (var score in student.FinishedSchoolSubjects)
+            {
+                sum += score.Credits;
+            }
+
+            return sum;
         }
     }
 }
