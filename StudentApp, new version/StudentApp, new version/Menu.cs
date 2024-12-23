@@ -68,7 +68,7 @@
                         break;
                     case '4':
                         Console.Clear();
-                        teacherManager.EnlistToClass(subjectManager.GetSchoolSubjects(), student, studentManager.GetUsers());
+                        teacherManager.EnlistToClass(subjectManager.GetSchoolSubjects(), studentManager.GetUsers());
                         break;
                     case '5':
                         Console.Clear();

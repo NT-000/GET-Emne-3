@@ -75,7 +75,9 @@
 
             Console.Clear();
             Console.WriteLine($"Info student: {student.Name}");
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\nAll passed classes");
+            Console.ResetColor();
             Console.WriteLine($"{line}");
             var studentGrades = gradeManager.Grades.Where(g => g.Student.Id == student.Id).ToList();
             foreach (var g in studentGrades)
@@ -84,14 +86,14 @@
             }
 
             Console.WriteLine($"{line}");
-            Console.WriteLine("\nSummary\n");
             Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\nSummary\n");
             Console.ResetColor();
-            Console.WriteLine($"Average grade: {CalculateGradeAverage(student, studentGrades)}");
+            Console.WriteLine($"Average grade: {CalculateGradeAverage(studentGrades)}");
             Console.WriteLine($"Total Credits: {CalculateTotalCredits(student)}");
             Console.WriteLine($"{line}\n");
     }
-        public double CalculateGradeAverage(Student student, List<Grade> studentGrades)
+        public double CalculateGradeAverage(List<Grade> studentGrades)
         {
             double sum = 0;
             foreach (var g in studentGrades)

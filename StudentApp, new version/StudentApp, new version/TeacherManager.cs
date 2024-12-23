@@ -7,7 +7,7 @@
         {
 
         }
-        public void EnlistToClass(List<SchoolSubject> subjectList, Student student, List<IUser> users)
+        public void EnlistToClass(List<SchoolSubject> subjectList, List<IUser> users)
         {
             Console.WriteLine($"Add student to a class");
             foreach (var s in users)
