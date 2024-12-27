@@ -10,6 +10,7 @@ namespace Abax_oppgave
     {
         public List<Vehicle> Vehicles { get; private set; }
 
+        public string line = new('_',60);
         public VehicleManager()
         {
             Vehicles =
@@ -24,11 +25,13 @@ namespace Abax_oppgave
         public void ShowAllVehicles(ActionMenu aMenu)
         {
             Console.WriteLine("All vehicles");
+            Console.WriteLine($"{line}");
             foreach (var v in Vehicles)
             {
 
-                Console.WriteLine($"{v.Id}.{v.PlateNumber} Type:{v.Type}");
+                Console.WriteLine($"{v.Id}.{v.Type} - Class:{v.VehicleClass} - {v.PlateNumber}");
             }
+            Console.WriteLine($"{line}");
 
             Console.WriteLine("Select one of the vehicles for more options.");
             var input = Convert.ToInt32(Console.ReadLine());
@@ -53,7 +56,7 @@ namespace Abax_oppgave
             {
                 foreach (var v in result)
                 {
-                    Console.WriteLine($"Platenumber:{v.PlateNumber} - Type:{v.Type} - Class:{v.VehicleClass} - HP:{v.Effect}");
+                    Console.WriteLine($"Vehicle:{v.Type} - Class:{v.VehicleClass} - HP:{v.Effect} - Platenumber:{v.PlateNumber}");
                 }
             }
             else
@@ -64,7 +67,7 @@ namespace Abax_oppgave
 
         private void SearchForHPRange()
         {
-            Console.WriteLine("Search for min and max HP range");
+            Console.WriteLine("Search for min and max HP range\n");
             Console.WriteLine("Enter min HP");
             var input = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter max HP");
@@ -85,14 +88,14 @@ namespace Abax_oppgave
 
         private void SearchType()
         {
-            Console.WriteLine("Search for type of vehicle");
+            Console.WriteLine("Search for type of vehicle\n");
             var input = Console.ReadLine().ToLower();
             var result = Vehicles.Where(v => v.Type.ToLower().Contains(input)).ToList();
             if (result != null)
             {
                 foreach (var v in result)
                 {
-                    Console.WriteLine($"Platenumber:{v.PlateNumber} - Type:{v.Type} - HP:{v.Effect}");
+                    Console.WriteLine($"Vehicle:{v.Type} - HP:{v.Effect} - Class:{v.VehicleClass} - Platenumber:{v.PlateNumber} ");
                 }
             }
             else
@@ -103,9 +106,12 @@ namespace Abax_oppgave
 
         public void SearchChoice()
         {
+            Console.WriteLine("Search menu");
+            Console.WriteLine($"{line}");
             Console.WriteLine("1.Search for type");
             Console.WriteLine("2.Search for amount of Horse Powers");
             Console.WriteLine("3.Search for vehicle class");
+            Console.WriteLine($"{line}");
 
             switch (Console.ReadKey(true).KeyChar)
             {
