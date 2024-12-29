@@ -1,6 +1,6 @@
 ﻿namespace Abax_oppgave
 {
-    internal class Vehicle
+    internal abstract class Vehicle
     {
         public string PlateNumber { get;}
 
@@ -23,11 +23,9 @@
             VehicleClass = vehicleClass;
         }
 
-        public virtual void ShowInfo()
-        {}
+        public abstract void ShowInfo();
 
-        public virtual void Drive()
-        {}
+        public abstract void Drive();
 
         public int GetId()
         {

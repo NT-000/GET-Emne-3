@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo-List", "Todo-List\Todo-List.csproj", "{F80B6499-4AC9-4795-A256-18F602FE58CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommandsAndInterface", "CommandsAndInterface", "{1B4A3419-2FEA-4442-833C-9A660EF67082}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CmdAndInheritance", "CmdAndInheritance", "{BE52EC65-A409-4F1C-A108-82EF29BC8B6B}"
+	ProjectSection(SolutionItems) = preProject
+		CommandAndInterface\AddToDoItemCmd.cs = CommandAndInterface\AddToDoItemCmd.cs
+		CommandAndInterface\DeleteToDoItemCmd.cs = CommandAndInterface\DeleteToDoItemCmd.cs
+		CommandAndInterface\Command.cs = CommandAndInterface\Command.cs
+		CommandAndInterface\MarkAsDoneCmd.cs = CommandAndInterface\MarkAsDoneCmd.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F80B6499-4AC9-4795-A256-18F602FE58CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F80B6499-4AC9-4795-A256-18F602FE58CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F80B6499-4AC9-4795-A256-18F602FE58CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F80B6499-4AC9-4795-A256-18F602FE58CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BE52EC65-A409-4F1C-A108-82EF29BC8B6B} = {1B4A3419-2FEA-4442-833C-9A660EF67082}
+	EndGlobalSection
+EndGlobal

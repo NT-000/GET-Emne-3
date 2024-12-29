@@ -8,7 +8,7 @@ namespace Abax_oppgave
 {
     internal class VehicleManager
     {
-        public List<Vehicle> Vehicles { get; private set; }
+        public List<Vehicle> Vehicles { get;}
 
         public string line = new('_',60);
         public VehicleManager()
@@ -52,7 +52,7 @@ namespace Abax_oppgave
             Console.WriteLine("Search for vehicle class");
             var input = Console.ReadLine().ToLower();
             var result = Vehicles.Where(v => v.VehicleClass.ToLower().Contains(input)).ToList();
-            if (result != null)
+            if (result.Any())
             {
                 foreach (var v in result)
                 {
@@ -73,7 +73,7 @@ namespace Abax_oppgave
             Console.WriteLine("Enter max HP");
             var input2 = Convert.ToInt32(Console.ReadLine());
             var result = Vehicles.Where(v => input <= v.Effect && v.Effect <= input2).ToList();
-            if (result != null)
+            if (result.Any())
             {
                 foreach (var v in result)
                 {
@@ -91,7 +91,7 @@ namespace Abax_oppgave
             Console.WriteLine("Search for type of vehicle\n");
             var input = Console.ReadLine().ToLower();
             var result = Vehicles.Where(v => v.Type.ToLower().Contains(input)).ToList();
-            if (result != null)
+            if (result.Any())
             {
                 foreach (var v in result)
                 {

@@ -11,7 +11,7 @@
         {
             while (true)
             {
-                Console.WriteLine("\nHi and welcome to the All Vehicles AutoShop!");
+                Console.WriteLine("Hi and welcome to the All Vehicles AutoShop!");
                 Console.WriteLine("1.Show vehicles");
                 Console.WriteLine("2.Search for vehicle\n");
                 switch (Console.ReadKey(true).KeyChar)

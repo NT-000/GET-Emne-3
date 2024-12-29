@@ -31,7 +31,7 @@
         }
         public override void Drive()
         {
-            Console.WriteLine($"The {Type} is taking of, the {Effect} horsepowers is doing this beast justice");
+            Console.WriteLine($"The {Type} is taking of, the {Effect} horse powers is doing this beast justice");
         }
     }
 }
