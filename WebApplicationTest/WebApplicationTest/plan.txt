@@ -1,0 +1,40 @@
+1: En enklest mulig backend - med ASP.NET Minimal API
+   - Hva er API? Hva er backend?
+
+2: Vi ser på en ferdig frontend som vi skal lage backend til
+   https://getacademy.github.io/ClaimTheSquare
+
+3: Intro til API med ASP.NET - backend til ClaimTheSquare
+   - v1: "In-memory database"
+   - Brukes av flere
+      - Hosting 
+      - HTTP tunnels med NGROK
+   - v2: Lagring til fil
+   - v3: Database (torsdag)
+      - Database
+        Databasemotor
+        Databasemotorprogramvare
+        Databasemotorinstans
+      - intro til helt grunnleggende SQL og MS SQL Server 
+      - skrive om api til persistens med database
+        - Dapper 
+      - Ev. om relasjoner
+
+CRUD 
+    - Create   (POST)
+    - Read     (GET)
+    - Update   (PUT)
+    - Delete   (DELETE)
+     
+
+NGROK
+Denne videoen vider hvordan man setter opp http-tunnel gratis med Ngrok: 
+https://www.youtube.com/watch?v=KcbUaZ2a4hc
+Kort oppsummering: 
+- lag konto på https://ngrok.com/
+- last ned https://ngrok.com/download og installer
+- Åpne cmd og gå til mappen hvor du har ngrok.exe
+- Logg inn på https://ngrok.com/ og finn kommandoen ngrok config add-authtoken med din auth token 
+- Kjør denne linjen i cmd
+- Start backenden din. Om den kjører på feks https://localhost:7219 starter du en tunnel med 
+  kommandoen ngrok http https://localhost:7219
