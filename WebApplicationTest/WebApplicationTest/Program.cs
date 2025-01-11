@@ -1,14 +1,22 @@
+using System.Text.Json;
 using WebApplicationTest;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-var textObjects = new List<TextObject>
+List<TextObject> textObjects;
+if (File.Exists("textobjects.json"))
 {
-    new TextObject { Index = 1, Text = "Nico", ForeColor = "blue", BackColor = "yellow" },
-    new TextObject { Index = 2, Text = "Arne", ForeColor = "red", BackColor = "blue" },
-};
+    var json = File.ReadAllText("textobjects.json");
+    JsonSerializer.Deserialize<List<TextObject>>(json);
+}
+else
+{
+    textObjects = new List<TextObject>();
+}
+textObjects = new List<TextObject>(); 
+
 app.MapGet("/textobjects", () =>
 {
     return textObjects;
@@ -16,16 +24,8 @@ app.MapGet("/textobjects", () =>
 app.MapPost("/textobjects", (TextObject textObject) =>
 {
     textObjects.Add(textObject);
+    var json = JsonSerializer.Serialize(textObject);
+    File.WriteAllText("textobjects.json", json);
 });
 
 app.Run();
-
-
-// app.MapGet("/weatherforecast", () =>
-// {
-//     return new Person[]
-//     {
-//         new Person("Jan", "London", 1980),
-//         new Person("Frode", "Johnsen", 1932)
-//     };
-// });

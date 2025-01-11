@@ -11,8 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Include="wwwroot\Model\Person.cs" />
-      <Compile Include="wwwroot\Model\TextObject.cs" />
+      <Content Include="Model\Person.cs" />
+      <Content Include="Model\TextObject.cs" />
     </ItemGroup>
 
 </Project>
