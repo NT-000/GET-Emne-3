@@ -2,7 +2,7 @@ namespace OrganTransplantNew;
 
 public class UserManager
 {
-    string[] _firstNames = ["Arne", "Britt", "Roy", "Kjell", "John", "Mary", "Roger", "Fredo", "Elisa"];
+    string[] _firstNames = ["Kim", "Andrea", "Nikita", "Iben", "Dylan", "Charlie", "Alexis", "Sasha", "Kris","Nico"];
     string[] _lastNames = ["Thue", "Hansen", "Jensen", "Haraldsen", "Hagen", "Johnsen", "Chiesa"];
     string[] _bloodtypes = ["A+", "A-", "B+", "B-", "O+", "O-"];
     public List<UserParent> Users { get; private set; } = [];
@@ -25,7 +25,7 @@ public class UserManager
 
     public void RandomizePatients(Random random)
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 30; i++)
         {
             string firstName = _firstNames[random.Next(_firstNames.Length)];
             string lastName = _lastNames[random.Next(_lastNames.Length)];
@@ -344,9 +344,11 @@ public class UserManager
 
     public void ShowUsers(char input)
     {
+        Console.Clear();
         if (input == '1')
         {
             Console.WriteLine("PATIENTS");
+            Thread.Sleep(500);
             var sortedList = OrderByUserList();
             foreach (var user in sortedList)
             {
@@ -359,6 +361,7 @@ public class UserManager
         else
         {
             Console.WriteLine("DOCTORS");
+            Thread.Sleep(500);
             var sortedList = OrderByUserList();
             foreach (var user in sortedList)
             {
@@ -393,16 +396,15 @@ public class UserManager
             {
                 if (selectedUser.GetPatient1() != null)
                 {
-                    Console.WriteLine("Select donorpatient by ID // Tip: Copy and paste ID");
+                    Console.WriteLine("Finding donor...");
+                    Thread.Sleep(500);
                     opManager.ShowPotentialMatches(userManager, selectedUser, opManager);
 
-                    var donor = Selected(userManager, selectedUser, opManager);
-
-                    if (donor is Patient patient2)
+                    if (selected is Patient patient2)
                     {
                         selectedUser.SetPatient2(patient2);
-                        Console.WriteLine(
-                            $"Donor selected: {patient2.FirstName} {patient2.LastName} ({patient2.BloodType})");
+                        Console.WriteLine($"{selectedUser.GetPatient2().FirstName} {selectedUser.GetPatient2().LastName}");
+                        Console.WriteLine($"Donor selected: {patient2.FirstName} {patient2.LastName} ({patient2.BloodType})");
                     }
                     else
                     {
@@ -483,15 +485,16 @@ public class UserManager
 
     public void DoctorInfoWithResponses(Doctor doctor)
     {
-        Console.WriteLine(
-            $"FIRSTNAME:{doctor.FirstName}\nLASTNAME:{doctor.LastName}\nAGE:{doctor.Age}\nGENDER:{doctor.Gender}\nSUCCESS RATE:{doctor.SuccessRate}%\nEXPERIENCE:{doctor.Experience} years.\nNOTES:\n{ResponseIsDrunk(doctor)}\n{ResponseIsSloppy(doctor)}\n{ResponseIsSharp(doctor)}");
+        Console.WriteLine("DOCTOR INFO:");
+        Console.WriteLine($"FIRSTNAME:{doctor.FirstName}\nLASTNAME:{doctor.LastName}\nAGE:{doctor.Age}\nGENDER:{doctor.Gender}\nSUCCESS RATE:{doctor.SuccessRate}%\nEXPERIENCE:{doctor.Experience} years.\nNOTES:\n{ResponseIsDrunk(doctor)}\n{ResponseIsSloppy(doctor)}\n{ResponseIsSharp(doctor)}");
     }
 
     public void PatientInfoWithResponses(Patient patient)
     {
         Console.WriteLine($"{Line}");
+        Console.WriteLine("PATIENT JOURNAL");
         Console.WriteLine(
-            $"FIRSTNAME:{patient.FirstName}\nLASTNAME:{patient.LastName}\nAGE:{patient.Age}\nGENDER:{patient.Gender}\nBLOOD TYPE:{patient.BloodType}\nNOTES:{ResponseIsFat(patient, _random)}\n{ResponseIsSmoker(patient, _random)}\n{ResponeIsDiabetic(patient, _random)}\n{ResponseIsAthletic(patient, _random)}");
+            $"FIRSTNAME:{patient.FirstName}\nLASTNAME:{patient.LastName}\nAGE:{patient.Age}\nGENDER:{patient.Gender}\nBLOOD TYPE:{patient.BloodType}\nNOTES:\n{ResponseIsFat(patient, _random)}\n{ResponseIsSmoker(patient, _random)}\n{ResponeIsDiabetic(patient, _random)}\n{ResponseIsAthletic(patient, _random)}");
         Console.WriteLine($"{Line}\n");
     }
 

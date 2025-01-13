@@ -5,7 +5,7 @@ namespace OrganTransplantNew;
 
 public class OperationManager
 {
-    public List<Patient> BloodMatches  = [];
+    public List<Patient> BloodMatches { get; private set; } = [];
     Random random = new Random();
     public OperationManager(){}
     
@@ -30,7 +30,8 @@ public class OperationManager
             }
         }
 
-        Console.WriteLine($"{BloodMatches.Count} blood matches");
+        Console.WriteLine($"RESULT OF DONOR SEARCH:{BloodMatches.Count} MATCHES FOUND");
+
     }
 
     public bool IsCompatible(string recipientBloodType, string donorBloodType)
@@ -64,6 +65,12 @@ public class OperationManager
 
     public void DoOperation(SelectedUser selectedUser)
     {
+        if (selectedUser.GetPatient1() == null || selectedUser.GetPatient2() == null ||
+            selectedUser.GetSelectedDoctor() == null)
+        {
+            Console.WriteLine("TO PROCEED TO THE OPERATING-ROOM YOU MUST SELECT TWO PATIENTS AND A SURGEON TO OPERATE...\n");
+            return;
+        }
         var patient1 = GetAllSelectedUsers(selectedUser, out var patient2, out var doctor);
         var chanceSuccess = CalculateOperationSuccess(patient1,patient2, doctor);
         chanceSuccess = Math.Clamp(chanceSuccess, 0, 100);
@@ -75,12 +82,24 @@ public class OperationManager
         {
             if (randomNumber <= chanceSuccess)
             {
-                Console.WriteLine("OPERATION WAS A SUCCESS!");
+                Console.WriteLine("\nOPERATION WAS A SUCCESS!\n");
                 Console.WriteLine($"{patient1.FirstName} and {patient2.FirstName} both survives.");
             }
             else
             {
-                Console.WriteLine($"OPERATION FAILED, BOTH PATIENTS DIED!\n{doctor.Type} {doctor.LastName} was fired");
+                if (randomNumber <= patient1.GetSuccessRate() * 3)
+                {
+                    Console.WriteLine($"OPERATION FAILED, {patient1.FirstName} {patient1.LastName} survives, but {patient2.FirstName} {patient2.LastName} dies.!\n");
+                }
+
+                if (randomNumber <= patient2.GetSuccessRate() * 3)
+                {
+                    Console.WriteLine($"OPERATION FAILED, {patient2.FirstName} {patient2.LastName} survives, but {patient1.FirstName} {patient1.LastName} dies.!\n");
+                }
+                else
+                {
+                    Console.WriteLine($"OPERATION FAILED!\n{doctor.Type} {doctor.LastName} was \n");
+                }
             }
         }
     }

@@ -12,9 +12,6 @@ public class UserParent
     public string Line = new string('_', 60);
     public static int Counter { get; set; } = 1;
     public int CountId {get; private set;}
-    public bool IsMatch {get; private set;}
-    
-    
 
     public UserParent(string firstName, string lastName, int age, Guid id, string gender, double successRate)
     {

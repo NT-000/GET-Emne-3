@@ -9,11 +9,11 @@ public class StartMenu
     {
         while (true)
         {
-            Console.WriteLine("Welcome to SloppyHands Hospital");
+            Console.WriteLine("WELCOME TO 'BACK ALLEY ORGAN-TRANSPLANT CLINIC'!\n");
             Console.WriteLine("1.Show Patients");
             Console.WriteLine("2.Show Doctors");
-            Console.WriteLine("3.Prepare and select patients and doctor for operation");
-            Console.WriteLine("4.See potential donorlist");
+            Console.WriteLine("3.Prepare and select patients and doctor for operation$$$");
+            Console.WriteLine("4.See potential donor-list");
             Console.WriteLine("5.Exit");
             
             var input = Console.ReadKey(true).KeyChar;
@@ -49,7 +49,7 @@ public class StartMenu
         }
         else
         {
-            Console.WriteLine("No selected patient");
+            Console.WriteLine("NO PATIENT SELECTED\n");
         }
     }
 
@@ -58,8 +58,7 @@ public class StartMenu
         bool isRunning = true;
         while (isRunning)
         {
-            Console.WriteLine("1.Select patient for operation\n2.Select second patient.\n3.Select doctor to for operation\n4.Let the operation begin.5.See operation1 information\n6.Return to Main Menu");
-            Console.WriteLine("");
+            Console.WriteLine("1.Select patient for operation\n2.Select second patient.\n3.Select doctor to for operation\n4.Let the operation begin.\n5.See operation1 information\n6.Return to Main Menu");
             var choice = Console.ReadKey(true).KeyChar;
             switch (choice)
             {
