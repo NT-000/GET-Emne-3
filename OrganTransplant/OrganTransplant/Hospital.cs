@@ -2,9 +2,9 @@
 {
     internal class Hospital
     {   
-       private List<Persons> _potentialDonors { get; set; }
-       private int _operationSucces {get; set;}
-       private List<Doctor> doctors { get; set; }
+       public List<Persons> _potentialDonors { get;private set; }
+       public int _operationSucces {get;private set;}
+       public List<Doctor> doctors { get; private set; }
        private SelectedUsers _selectedUsers { get; set; }
 
         public string CheckBloodtype()
